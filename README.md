@@ -70,7 +70,7 @@ Francisco Cardozo - foc9@miami.edu
 Project Link: [https://github.com/focardozom/gp](https://github.com/focardozom/gp)
 
 
-## References
+## References and notes
 
 This is a detailed list of references that we've used throughout this project. These references include research papers, tutorials, and other helpful resources related to Gaussian Processes and their applications.
 
@@ -83,7 +83,7 @@ Please check out our [References](https://github.com/focardozom/gp/blob/main/REF
 3. Modeling-inference-prediction with GP
 4. Practical example
 
-## Public resentations
+## Public presentations
 
 1. [Intro to Gaussian Process] 
 2. [Ploting multivariate data]
