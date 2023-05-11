@@ -1,0 +1,357 @@
+---
+title: "Gaussian Processes"
+author:
+  - name: Francisco Cardozo
+    affiliation: University of Miami
+    department: Public Health
+date: "fix how to use in jupyter `r Sys.Date()`"
+format: revealjs
+jupyter: julia-1.8
+---
+
+# Agenda {background-color=#4deeea}
+
+:::: {.columns}
+
+::: {.column width="45%"}
+
+* What is Gaussian Processes (GP)  
+* Simple problem 
+  * Linear regression 
+  * Polynomial regression 
+* Problem with polynomials 
+  * Splines/loess
+
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+* Kernels
+  * Types of Kernels
+* Gaussian Process
+  * Estimate
+  * Predictions
+  * Inference
+* Example
+  
+:::
+
+::::
+
+
+# What is Gaussian Processes (GP) {background-color=#f000ff}
+
+## GP
+
+* A Gaussian process is a collection of random variables, any finite number of which have a joint Gaussian distribution.
+
+* A Gaussian process is a stochastic process with a joint Gaussian distribution. It is a generalization of the notion of a Gaussian distribution to infinite-dimensional random vectors.
+
+## GP
+
+GTP response: A Gaussian Process is a way to make predictions or guesses when *we have some information*, but not everything. Imagine you have a bunch of dots on a piece of paper, and you want to draw a line that goes smoothly through them. The Gaussian Process helps us do that by using math!
+
+```{julia}
+using Pkg
+#Pkg.add("DataFrames")
+#Pkg.add("GLM")
+#Pkg.add("StatsModels")
+#Pkg.add("Distributions")
+Pkg.add("RCall")
+```
+
+```{julia}
+using DataFrames, GLM, Plots
+```
+
+## GP
+
+Can make predictions incorporation prior knowledge (kernels) and provide uncertainty measures over prediction. 
+
+
+# Simulated data example  {background-color=#74ee15}
+
+## Simulated data
+
+* Create some data using the Sine function.
+* Add some noise to the data.
+
+```{julia}
+#| echo: true
+#| output: false
+
+x = range(0, 10, length=30)
+y = sin.(x)
+y_noisy = @. sin(x) + 0.3*randn()
+
+```
+
+## Plot generated data
+
+```{julia}
+
+data = DataFrame(x=x,y=y_noisy)
+
+plot(data.x, data.y, seriestype=:scatter, label="data")
+
+```
+# Linear Regression {background-color=#ffe700}
+
+## Estimate the linear regression
+
+```{julia}
+#| messages: false
+#| warning: false
+ols = lm(@formula(y ~ x), data)
+pred = DataFrame(x = x)
+pred.y = predict(ols, pred)
+ols
+```
+
+## Plot the linear regression
+
+```{julia}
+
+plot!(data.x, pred.y, seriestype=:line, label="Linear")
+
+```
+
+# Polynomial Regression {background-color=#74ee15} 
+
+## Estimate polynomial
+
+```{julia}
+ols_p = lm(@formula(y ~ x + x^2), data)
+pred.y_p = predict(ols_p, pred)
+ols_p
+```
+
+## Plot polynimial 
+
+```{julia}
+plot!(data.x, pred.y_p, seriestype=:line, label="Ploy")
+```
+
+## Estimate polynomial part II
+
+```{julia}
+ols_p = lm(@formula(y ~ x + x^2 + x^3 + x^4), data)
+pred.y_p = predict(ols_p, pred)
+ols_p
+```
+
+## Plot polynimial  part. II
+
+```{julia}
+plot!(data.x, pred.y_p, seriestype=:line, label="Ploy")
+```
+
+## Estimate Polynomial part II
+
+```{julia}
+ols_mp = lm(@formula(y ~ x + x^2 + x^3 + x^4 + x^5 + x^6 + x^7), data)
+pred.y_mp = predict(ols_mp, pred)
+ols_mp
+```
+
+## Plot polynomial part II
+
+```{julia}
+plot!(data.x, pred.y_mp, seriestype=:line, label="Ploy 7")
+```
+
+# Problems
+
+## What are the weakness of this approach
+
+Very easy, but, what if we have more variables?
+
+* Bad for predictions
+* Not smooth
+* Overfitting
+* Intractable
+
+## The solucion 
+
+Use kernels!
+
+# Kernels  {background-color=#001eff}  
+
+## What a kernel is?
+
+A kernel is a function that computes a measure of similarity or a relationship between two data points or two sets of data. The output of a kernel function is a scalar that represents the inner product of two data points in a high dimensional feature space. This allows complex relationships to be modeled in this higher-dimensional space.
+
+## What kernels you should know?
+
+::: {.r-fit-text}
+
+**Linear Kernel:** The linear kernel is the simplest kernel function. It is given by the inner product <x,y> + c for a constant c and data vectors x and y. 
+
+**Polynomial Kernel:** The polynomial kernel is a more general type of kernel that can model nonlinear decision boundaries. It is given by (scale*<x,y> + c)^d for a constant c, a scale parameter scale, a degree d, and data vectors x and y.
+
+**Radial Basis Function (RBF):** The RBF kernel is a popular kernel function that can model non-linear decision boundaries. It is given by exp(-gamma*||x-y||^2) for a constant gamma and data vectors x and y. The RBF kernel maps data into an infinite-dimensional space, making it a powerful tool for many machine learning algorithms.
+
+**Sigmoid Kernel, Laplacian Kernel, Spectral kernel, Mahalonibus kernel,...**
+
+:::
+
+## How to use kernels to model the dimulated data
+::: {.r-fit-text}
+
+* Use the package is call `GaussianProcesses`
+* Specify the mean and the kernel 
+
+*Mean*: Zero mean function  
+*Kernel*: Squared exponential kernel (note that hyperparameters are on the log scale)  
+*Noise*: log standard deviation of observation noise (this is optional)
+
+:::
+
+```{julia}
+#| echo: true
+#| output: false
+
+using GaussianProcesses
+
+mZero = MeanZero()     
+kern = SE(0.0,0.0)
+logObsNoise = -1.0  
+
+```
+
+## Estimate a Gaussian Process
+
+```{julia}
+#| echo: true
+
+gp = GP(x, y_noisy,mZero,kern,logObsNoise) 
+
+```
+
+## Plot Gaussian Processes
+
+```{julia}
+plot(gp)
+```
+
+# How GP works? {background-color=#74ee15}  
+
+## Let's go beyond
+
+```{julia}
+#| echo: true
+#| output: false
+
+using Distributions
+
+# Set the mean and covariance matrix
+μ = [0.0, 0.0]
+Σ = [1.0 0.8; 0.8 1.0]
+
+# Create a multivariate normal distribution with the desired parameters
+d = MvNormal(μ, Σ)
+
+# Generate 100 samples from the distribution
+n = 100
+x = rand(d, n)'
+
+# Print the mean and covariance of the generated samples
+println("Mean: ", mean(x))
+println("Covariance: ", cov(x))
+
+
+```
+
+## Plot the data
+
+```{julia}
+#| echo: true
+#| output: false
+
+df = DataFrame(x, [:var1, :var2])
+plot(df.var1, df.var2, seriestype=:scatter, label="data")
+```
+
+
+## Simulate Multivariate Normal data set 
+
+```{julia}
+#| echo: true
+#| output: false
+
+μ = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+Σ = [1.0 0.8 0.7 0.6 0.5 0.4 0.3 0.2 0.1 0.02; 0.8 1.0 0.8 0.7 0.6 0.5 0.4 0.3 0.2 0.1; 0.7 0.8 1.0 0.8 0.7 0.6 0.5 0.4 0.3 0.2; 0.6 0.7 0.8 1.0 0.8 0.7 0.6 0.5 0.4 0.3; 0.5 0.6 0.7 0.8 1.0 0.8 0.7 0.6 0.5 0.4; 0.4 0.5 0.6 0.7 0.8 1.0 0.8 0.7 0.6 0.5; 0.3 0.4 0.5 0.6 0.7 0.8 1.0 0.8 0.7 0.6; 0.2 0.3 0.4 0.5 0.6 0.7 0.8 1.0 0.8 0.7; 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 1.0 0.8; 0.02 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 1.0]
+
+# Create a multivariate normal distribution with the desired parameters
+d = MvNormal(μ, Σ)
+
+# Generate 100 samples from the distribution
+n = 100
+x = rand(d, n)'
+```
+
+## Store the data to work in R
+
+```{julia}
+data_f = DataFrame(x, [:var1, :var2, :var3, :var4, :var5, :var6, :var7, :var8, :var9, :var10])
+
+using CSV
+CSV.write("data.csv", data_f)
+
+```
+
+## R quarto here
+
+## Model, predict and inference.
+
+```{julia}
+using GaussianProcesses
+
+mZero = MeanZero()     #Zero mean function
+kern = SE(0.0,0.0)     #Sqaured exponential kernel (note that hyperparameters are on the log scale)
+
+logObsNoise = -1.0   # log standard deviation of observation noise (this is optional)
+gp = GP(data_f.var1,data_f.var2,mZero,kern,logObsNoise) 
+
+```
+
+## After fiting we can predict the mean and cov
+
+```{julia}
+
+μ, σ² = predict_y(gp,range(0,stop=2π,length=100));
+μ
+σ²
+```
+
+## Plot the data
+
+```{julia}
+plot(gp; xlabel="var1", ylabel="var2", title="Gaussian process", legend=false, fmt=:png) 
+
+```
+
+## Optimazed
+
+```{julia}
+using Optim
+optimize!(gp; method=ConjugateGradient()) 
+```
+
+## Plot optimezed
+
+```{julia}
+plot(gp; legend=false, fmt=:png) 
+```
+
+## Set priors
+
+```{julia}
+set_priors!(kern, [Normal(), Normal()]) # Uniform(0,1) distribution assumed by default if priors not specified
+chain = mcmc(gp)
+plot(chain', label=["Noise", "SE log length", "SE log scale"]; fmt=:png)
+```
