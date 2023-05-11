@@ -65,6 +65,16 @@ Francisco Cardozo - foc9@miami.edu
 
 Project Link: [https://github.com/focardozom/gp](https://github.com/focardozom/gp)
 
-**Please note that this project is a work in progress. It is evolving and will continue to do so with ongoing learning and understanding. I welcome suggestions and contributions to enhance our collective knowledge on this topic.*
 
+> :warning: **NOTE: This project is currently in development mode.** 
+
+*Please note that this project is a work in progress. It is evolving and will continue to do so with ongoing learning and understanding. I welcome suggestions and contributions to enhance our collective knowledge on this topic.*
+
+## References
+
+This is a detailed list of references that we've used throughout this project. These references include research papers, tutorials, and other helpful resources related to Gaussian Processes and their applications.
+
+Please check out our References document for more information.
+
+REFERENCES.md
 
