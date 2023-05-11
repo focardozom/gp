@@ -35,7 +35,7 @@ Ensure you have the following software installed on your system:
 - [Julia](https://julialang.org/downloads/)
 - [Python](https://www.python.org/downloads/)
 - [R](https://cran.r-project.org/)
-- [VS Code](https://code.visualstudio.com/download)
+- [VS Code](https://code.visualstudio.com/download) or [POSIT](https://posit.co/downloads/)
 - [Quarto](https://quarto.org/docs/installation.html)
 
 ### Installation
