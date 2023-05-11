@@ -1,0 +1,129 @@
+---
+title: "Gaussian Process"
+author: "Francisco Cardozo"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+format: revealjs
+editor_options: 
+  chunk_output_type: console
+---
+
+
+## Agenda
+
+* Multivariate data 
+* Plot multivariate data
+* More on Kernels
+
+## Import data
+
+```{r}
+#|: warning: false
+#|
+library(tidyverse)
+library(ggcorrplot)
+library(GGally)
+the_data <- read_csv("data.csv")
+```
+
+## Plot the data
+
+```{r}
+the_data |>
+  cor() |>
+  ggcorrplot()
+```
+
+## Plot the data
+
+```{r}
+the_data |>
+  ggpairs()
+```
+
+## Plot two variables?
+
+```{r}
+the_data |>
+  mutate(id = row_number()) |>
+  select(var1, var2, id) |>
+  ggplot(aes(x = var1, y = var2)) +
+  geom_point() +
+  scale_y_continuous(limits = c(-3, 3))
+
+```
+
+## Plot three variables?
+
+```{r}
+the_data |>
+  mutate(id = row_number()) |>
+  select(var1, var2, id) |>
+  ggplot(aes(x = var1, y = var2)) +
+  geom_point() +
+  scale_y_continuous(limits = c(-3, 3))
+
+```
+
+## Plot four variables?
+
+(make it interactive)
+
+```{r}
+the_data |>
+  mutate(id = row_number()) |>
+  select(var1, var2, id) |>
+  filter(id == sample(1:100, 1)) |>
+  pivot_longer(-id) |>
+  mutate(name = factor(name)) |>
+  ggplot(aes(x = name, y = value, group = id)) +
+  geom_point() +
+  geom_line() +
+  scale_y_continuous(limits = c(-3, 3))
+```
+
+## Plot another two variables
+
+```{r}
+the_data |>
+  mutate(id = row_number()) |>
+  select(var1, var9, id) |>
+  filter(id == sample(1:100, 1)) |>
+  pivot_longer(-id) |>
+  ggplot(aes(x = name, y = value, group = id)) +
+  geom_point() +
+  geom_line() +
+  scale_y_continuous(limits = c(-3, 3))
+```
+
+## Plot the complete dataset
+
+```{r}
+the_data |>
+  mutate(id = row_number()) |>
+  filter(id == sample(1:100, 1)) |>
+  pivot_longer(-c(id)) |>
+  mutate(name = factor(name,
+    levels = paste0("var", seq(1, 10, 1))
+  )) |>
+  ggplot(aes(x = name, y = value, group = id)) +
+  geom_point() +
+  geom_line() +
+  scale_y_continuous(limits = c(-3.3, 3.3))
+```
+
+## Plot the complete dataset
+
+(make it interactive)
+
+```{r}
+the_data |>
+  mutate(id = row_number()) |>
+  filter(id %in% sample(1:100, 3)) |>
+  pivot_longer(-id) |>
+  ggplot(aes(x = name, y = value, group = id)) +
+  geom_point() +
+  geom_line() +
+  scale_y_continuous(limits = c(-3, 3))
+```
+
+
