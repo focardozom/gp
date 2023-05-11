@@ -76,5 +76,10 @@ This is a detailed list of references that we've used throughout this project. T
 
 Please check out our [References](https://github.com/focardozom/gp/blob/main/REFERENCES.md) document for more information.
 
+## Presentations
 
+1. [Intro to Gaussian Process](https://github.com/focardozom/gp/blob/main/GP_presentation_jl.qmd) 
+2. [Ploting multivariate data](https://github.com/focardozom/gp/blob/main/GP_presentation_r.qmd)
+3. Modeling-inference-prediction with GP
+4. Practical example
 
