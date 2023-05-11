@@ -22,7 +22,7 @@
 # Videos
 1. [Introduction to Gaussian processes](https://www.youtube.com/watch?v=GWHE5vnpxks&list=PLZ_xn3EIbxZHynuWRdYp4WDtpKm5Xo9Ge) 
 2. [Gaussian processes for fun and profit: Probabilistic machine learning in industry](https://www.youtube.com/watch?v=uq8VxqeHPj8)
-3. [[Support Vector Machine The Kernel Trick RBF Function]] [here](https://www.youtube.com/watch?v=e4qWknGNzB0) (Done)
+3. [Support Vector Machine The Kernel Trick RBF Function](https://www.youtube.com/watch?v=e4qWknGNzB0)
 4. https://www.youtube.com/watch?v=5Cqi-RAwAu8
 # Apps
 1. [Interactive Gaussian Process Visualization](http://www.infinitecuriosity.org/vizgp/)

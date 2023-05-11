@@ -74,7 +74,7 @@ Project Link: [https://github.com/focardozom/gp](https://github.com/focardozom/g
 
 This is a detailed list of references that we've used throughout this project. These references include research papers, tutorials, and other helpful resources related to Gaussian Processes and their applications.
 
-Please check out our References document for more information.
+Please check out our [References](https://github.com/focardozom/gp/blob/main/REFERENCES.md) document for more information.
 
-REFERENCES.md
+
 
