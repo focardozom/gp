@@ -22,9 +22,9 @@ This project utilizes:
 
 3. **R**: A perfect software for statistical computing and graphics.
 
-The code is mainly written in the Visual Studio Code (VS Code) IDE, which supports a multitude of programming languages including Julia, Python, and R. You will need VS Code to run most of the project files.
+The code is mainly written in the Visual Studio Code (VS Code) IDE, which supports a multitude of programming languages including Julia, Python, and R. We also used the Posit IDE which is pretty amazing too.
 
-We also use Quarto, a scientific and technical publishing system built on Pandoc. It's an excellent tool for creating beautiful, flexible, and reproducible documents with elements like equations, tables, and plots.
+The materials were created in Quarto, a scientific and technical publishing system built on Pandoc. It's an excellent tool for creating beautiful, flexible, and reproducible documents with elements like equations, tables, and plots.
 
 ## Getting Started
 
