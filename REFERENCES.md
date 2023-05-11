@@ -6,9 +6,9 @@
 2. Schulz, E., Speekenbrink, M., & Krause, A. (2018). A tutorial on gaussian process regression: Modelling, exploring, and exploiting functions. _Journal of Mathematical Psychology_, _85_, 1–16. [https://doi.org/10.1016/j.jmp.2018.03.001](https://doi.org/10.1016/j.jmp.2018.03.001)
 3. 
 # Web documents
-1. [[Probabilistic Machine Learning]] [here](https://research.cs.aalto.fi//pml/software/gpstuff/) 
-2. [[Yes but what is a Gaussian process?]] [here](https://dansblog.netlify.app/posts/2021-11-03-yes-but-what-is-a-gaussian-process-or-once-twice-three-times-a-definition-or-a-descent-into-madness/yes-but-what-is-a-gaussian-process-or-once-twice-three-times-a-definition-or-a-descent-into-madness.html)
-3. [[Priors for the parameters in a Gaussian process]] [here](https://dansblog.netlify.app/posts/2022-09-07-priors5/priors5.html)
+1. [Probabilistic Machine Learning](https://research.cs.aalto.fi//pml/software/gpstuff/) 
+2. [Yes but what is a Gaussian process?](https://dansblog.netlify.app/posts/2021-11-03-yes-but-what-is-a-gaussian-process-or-once-twice-three-times-a-definition-or-a-descent-into-madness/yes-but-what-is-a-gaussian-process-or-once-twice-three-times-a-definition-or-a-descent-into-madness.html)
+3. [Priors for the parameters in a Gaussian process](https://dansblog.netlify.app/posts/2022-09-07-priors5/priors5.html)
 5. [Medium. Gaussian Process Models](https://towardsdatascience.com/gaussian-process-models-7ebce1feb83d)
 6. [Gaussian processes (1/3) - From scratch](https://peterroelants.github.io/posts/gaussian-process-tutorial/)
 7. [Gaussian processes (2/3) - Fitting a Gaussian process kernel](https://peterroelants.github.io/posts/gaussian-process-kernel-fitting/)
