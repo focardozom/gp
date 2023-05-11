@@ -4,6 +4,10 @@
 
 Welcome to my independent study repository where I aim to demystify Gaussian Processes and demonstrate their applications in Prevention Science. This project is all about exploring the depth and breadth of Gaussian Processes, simulating data to comprehend their functioning, and generating practical examples using Julia, Python, and R programming languages.
 
+> :warning: **NOTE: This project is currently in development mode.** 
+
+*Please note that this project is a work in progress. It is evolving and will continue to do so with ongoing learning and understanding. I welcome suggestions and contributions to enhance our collective knowledge on this topic.*
+
 ## Overview
 
 Gaussian Processes are a powerful tool in Machine Learning and Statistics, having immense potential to be used in Prevention Science. This project aims to simplify these complex concepts, providing comprehensive materials to understand and employ Gaussian Processes.
@@ -65,10 +69,6 @@ Francisco Cardozo - foc9@miami.edu
 
 Project Link: [https://github.com/focardozom/gp](https://github.com/focardozom/gp)
 
-
-> :warning: **NOTE: This project is currently in development mode.** 
-
-*Please note that this project is a work in progress. It is evolving and will continue to do so with ongoing learning and understanding. I welcome suggestions and contributions to enhance our collective knowledge on this topic.*
 
 ## References
 
