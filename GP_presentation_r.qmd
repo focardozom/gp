@@ -17,7 +17,6 @@ editor_options:
 ## Import data
 
 ```{r}
-#|: warning: false
 #|
 library(tidyverse)
 library(ggcorrplot)
