@@ -69,7 +69,9 @@ using DataFrames, GLM, Plots
 
 ## GP
 
-Can make predictions incorporation prior knowledge (kernels) and provide uncertainty measures over prediction. 
+* GPR is a non-parametric model, which means that it does not make any assumptions about the underlying distribution of the data. 
+
+* Can make predictions incorporation prior knowledge (kernels) and provide uncertainty measures over prediction. 
 
 
 # Simulated data example  {background-color=#74ee15}
@@ -178,11 +180,14 @@ Very easy, but, what if we have more variables?
 
 Use kernels!
 
+
 # Kernels  {background-color=#001eff}  
 
 ## What is a Kernel?
 
 A kernel is a function that computes a measure of similarity or a relationship between two data points or two sets of data. The output of a kernel function is a scalar that represents the inner product of two data points in a high dimensional feature space. This allows complex relationships to be modeled in this higher-dimensional space.
+
+The kernel function is used to construct the covariance matrix of the Gaussian process.
 
 ## What Kernels you Should Know?
 
@@ -237,6 +242,30 @@ gp = GP(x, y_noisy,mZero,kern,logObsNoise)
 plot(gp)
 ```
 
+## Advantages of GP
+
+* GP is a non-parametric model, which means that it does not make any assumptions about the underlying distribution of the data. This makes GPR a flexible and powerful tool for a wide variety of applications.
+
+* GPR is able to model nonlinear relationships between input features and output variables.
+
+* GPR is able to provide uncertainty estimates for its predictions.
+
+## Disadvantages of GP
+
+* GPR can be computationally expensive, especially for large datasets.
+
+* GPR can be sensitive to the choice of kernel function.
+
+* GPR can be difficult to interpret.
+
+## GP in Prevention Science
+
+**Identifying risk factors.** GPs can be used to identify risk factors for negative outcomes, such as substance abuse, crime, and violence. By identifying risk factors, prevention scientists can develop targeted interventions to reduce the risk of these negative outcomes.
+
+**Evaluating the effectiveness of prevention programs.** GPs can be used to evaluate the effectiveness of prevention programs. 
+
+**Personalizing prevention interventions.** GPs can be used to adapt prevention interventions. By taking into account individual risk factors, GPs can help to develop tailored interventions to the specific needs of each individual.
+
 # How GP Works? {background-color=#74ee15}  
 
 ## Let's Go Beyond
@@ -277,6 +306,10 @@ plot(df.var1, df.var2, seriestype=:scatter, label="data")
 
 
 ## Simulate Multivariate Normal Data Set 
+
+*Multivariate normal distribution:* A multivariate normal distribution is a probability distribution that describes the joint distribution of a set of variables.
+
+**Joint and conditional probability:** Joint probability is the probability that two or more events will occur simultaneously. Conditional probability is the probability that an event will occur given that another event has already occurred.
 
 ```{julia}
 #| echo: true
