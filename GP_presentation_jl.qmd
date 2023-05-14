@@ -4,7 +4,6 @@ author:
   - name: Francisco Cardozo
     affiliation: University of Miami
     department: Public Health
-date: "fix how to use in jupyter `r Sys.Date()`"
 format: revealjs
 jupyter: julia-1.8
 ---
@@ -78,7 +77,7 @@ using DataFrames, GLM, Plots
 
 ## Simulated data
 
-* Create some data using the Sine function.
+* Create some data using the `Sine` function.
 * Add some noise to the data.
 
 ```{julia}
@@ -125,6 +124,8 @@ plot!(data.x, pred.y, seriestype=:line, label="Linear")
 
 ## Estimate Polynomial
 
+Polynomial regression extends simple linear regression by allowing for more flexible relationships between the independent and dependent variables. It does this by adding higher-order terms (squares, cubes, etc.) of the predictor variables in the regression equation.
+
 ```{julia}
 ols_p = lm(@formula(y ~ x + x^2), data)
 pred.y_p = predict(ols_p, pred)
@@ -165,7 +166,7 @@ ols_mp
 plot!(data.x, pred.y_mp, seriestype=:line, label="Ploy 7")
 ```
 
-# Problems
+# Limitations of this approach
 
 ## What are the Weakness of this Approach
 
@@ -178,30 +179,38 @@ Very easy, but, what if we have more variables?
 
 ## The Solution 
 
-Use kernels!
+**Splines:** The idea is to fit different low-degree polynomial functions over different parts of the data. This can provide a more flexible fit than a single polynomial over the entire range of the data.
 
+**LOESS (LOcally Estimated Scatterplot Smoothing) or LOWESS (LOcally WEighted Scatterplot Smoothing):** for each point in the dataset, a subset of neighboring points is selected, and a polynomial (usually linear or quadratic) is fit to this subset of data. The point is then estimated using this local fit. The process is repeated for each point in the dataset to generate a smooth curve that captures the local trends in the data.
 
 # Kernels  {background-color=#001eff}  
 
 ## What is a Kernel?
 
-A kernel is a function that computes a measure of similarity or a relationship between two data points or two sets of data. The output of a kernel function is a scalar that represents the inner product of two data points in a high dimensional feature space. This allows complex relationships to be modeled in this higher-dimensional space.
+::: {.r-fit-text}
 
-The kernel function is used to construct the covariance matrix of the Gaussian process.
+* The core idea of Kernel methods is to map the input data into a higher-dimensional space where it is easier to apply linear methods
+
+> A kernel is a function that computes a measure of similarity or a relationship between two data points or two sets of data. The output of a kernel function is a scalar that represents the inner product of two data points in a high dimensional feature space. This allows complex relationships to be modeled in this higher-dimensional space.
+
+**The kernel function is used to construct the covariance matrix of the Gaussian process.**
+
+:::
 
 ## What Kernels you Should Know?
 
-::: {.r-fit-text}
+**Linear Kernel:** The linear kernel is the simplest kernel function. It is given by the inner product <x,y> + c for a constant c and data vectors x and y (same than linear regression).
 
-**Linear Kernel:** The linear kernel is the simplest kernel function. It is given by the inner product <x,y> + c for a constant c and data vectors x and y. 
+**Polynomial Kernel:** The polynomial kernel is a more general type of kernel that can model nonlinear decision boundaries. It is given by (scale*<x,y> + c)^d for a constant c, a scale parameter scale, a degree d, and data vectors x and y (same than polynomial regression).
 
-**Polynomial Kernel:** The polynomial kernel is a more general type of kernel that can model nonlinear decision boundaries. It is given by (scale*<x,y> + c)^d for a constant c, a scale parameter scale, a degree d, and data vectors x and y.
+## What Kernels you Should Know?
 
-**Radial Basis Function (RBF):** The RBF kernel is a popular kernel function that can model non-linear decision boundaries. It is given by exp(-gamma*||x-y||^2) for a constant gamma and data vectors x and y. The RBF kernel maps data into an infinite-dimensional space, making it a powerful tool for many machine learning algorithms.
+**Radial Basis Function (RBF):** It is given by exp(-gamma*||x-y||^2) (like a normal distribution) for a constant gamma (two tunning parameters) and data vectors x and y. The RBF kernel maps data into an infinite-dimensional space, making it a powerful tool for many machine learning algorithms.
 
 **Sigmoid Kernel, Laplacian Kernel, Spectral kernel, Mahalonibus kernel,...**
 
-:::
+* Must be `positive definitive`
+* You can create your own kernel (i.e. linear*periodic)
 
 ## How to use Kernels to Model the Simulated Data
 ::: {.r-fit-text}
@@ -260,11 +269,19 @@ plot(gp)
 
 ## GP in Prevention Science
 
-**Identifying risk factors.** GPs can be used to identify risk factors for negative outcomes, such as substance abuse, crime, and violence. By identifying risk factors, prevention scientists can develop targeted interventions to reduce the risk of these negative outcomes.
+**Identifying risk factors.** Gaussian Processes (GPs) can be used to identify risk factors for negative outcomes, especially those that are hidden behind complex relationships. GPs can model these complex relationships, potentially revealing risk factors that simpler models might miss. By identifying these risk factors, prevention scientists can develop targeted interventions to mitigate the risk of negative outcomes. In addition, the probabilistic nature of GPs provides a measure of uncertainty around the identified risk factors, which is valuable information for decision-making.
 
-**Evaluating the effectiveness of prevention programs.** GPs can be used to evaluate the effectiveness of prevention programs. 
+## GP in Prevention Science
 
-**Personalizing prevention interventions.** GPs can be used to adapt prevention interventions. By taking into account individual risk factors, GPs can help to develop tailored interventions to the specific needs of each individual.
+**Evaluating the effectiveness of prevention programs.** Due to their flexibility, GPs can be used to evaluate the efficacy and effectiveness of prevention programs. They can account for complex and non-linear relationships between variables, which can lead to more accurate estimates of program effects. Furthermore, the ability to provide a measure of uncertainty around these estimates can be crucial for understanding the range of possible effects and for making informed decisions about the implementation of these programs.
+
+## GP in Prevention Science
+
+**Personalizing prevention interventions.** GPs can be instrumental in personalizing prevention interventions. By taking into account individual risk factors and their complex interactions, GPs can aid in the development of interventions tailored to the specific needs of each individual. This could lead to more effective interventions, as they are designed with the intricacies of individual circumstances in mind.
+
+## GP in Prevention Science
+
+**Understanding in cases of low information.** GPs are particularly useful when data is scarce. Even with a small amount of data, a GP can provide a reasonable estimate of the underlying function along with a measure of uncertainty. This means that they can provide useful insights even in low-information situations, where other models might struggle. This can be particularly valuable in prevention science, where often the goal is to act quickly to prevent negative outcomes, and waiting for more data may not be feasible.
 
 # How GP Works? {background-color=#74ee15}  
 
@@ -311,6 +328,8 @@ plot(df.var1, df.var2, seriestype=:scatter, label="data")
 
 **Joint and conditional probability:** Joint probability is the probability that two or more events will occur simultaneously. Conditional probability is the probability that an event will occur given that another event has already occurred.
 
+## Simulate Multivariate Normal Data Set 
+
 ```{julia}
 #| echo: true
 #| output: false
@@ -327,8 +346,6 @@ n = 100
 x = rand(d, n)'
 ```
 
-## Store the Data to Work in R
-
 ```{julia}
 data_f = DataFrame(x, [:var1, :var2, :var3, :var4, :var5, :var6, :var7, :var8, :var9, :var10])
 
@@ -339,9 +356,14 @@ CSV.write("data.csv", data_f)
 
 ## R Quarto Here
 
-## Model, Predict and Inference.
+Flip to presentation in R. 
+
+## Predict and Inference.
 
 ```{julia}
+#| echo: true
+#| output: false
+
 using GaussianProcesses
 
 mZero = MeanZero()     #Zero mean function
@@ -355,15 +377,20 @@ gp = GP(data_f.var1,data_f.var2,mZero,kern,logObsNoise)
 ## After Fiting we can Predict the Mean and Covariance
 
 ```{julia}
-
+#| echo: true
+#| output: false
+#| 
 μ, σ² = predict_y(gp,range(0,stop=2π,length=100));
 μ
 σ²
 ```
 
-## Plot the Data
+## Plot GP
 
 ```{julia}
+#| echo: true
+#| output: false
+
 plot(gp; xlabel="var1", ylabel="var2", title="Gaussian process", legend=false, fmt=:png) 
 
 ```

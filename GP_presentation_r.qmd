@@ -1,5 +1,6 @@
 ---
 title: "Gaussian Process"
+subtitle: "How it works using simulation"
 author: "Francisco Cardozo"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 format: revealjs
@@ -10,14 +11,17 @@ editor_options:
 
 ## Agenda
 
-* Multivariate data 
-* Plot multivariate data
-* More on Kernels
+* Exploring Multivariate data
+
+* Plotting multivariate data
+
+* Discussing more on Kernels
 
 ## Import data
 
+We begin by creating a data set that follows a multivariate normal distribution.
+
 ```{r}
-#|
 library(tidyverse)
 library(ggcorrplot)
 library(GGally)
@@ -25,6 +29,8 @@ the_data <- read_csv("data.csv")
 ```
 
 ## Plot the data
+
+Now, we visualize the correlation matrix of the data using a correlation plot. This will provide a quick overview of the relationships between different variables.
 
 ```{r}
 the_data |>
@@ -34,12 +40,16 @@ the_data |>
 
 ## Plot the data
 
+We can further explore these relationships using a pairs plot, which shows scatter plots for pairwise relationships and histograms along the diagonal.
+
 ```{r}
 the_data |>
   ggpairs()
 ```
 
 ## Plot two variables?
+
+To focus on the relationship between two specific variables, we plot var1 against var2. Here, we use row numbers as ids for the data points.
 
 ```{r}
 the_data |>
@@ -53,6 +63,8 @@ the_data |>
 
 ## Plot three variables?
 
+To plot three variables, we might consider using 3D scatter plots or other visualization methods.
+
 ```{r}
 the_data |>
   mutate(id = row_number()) |>
@@ -64,6 +76,8 @@ the_data |>
 ```
 
 ## Plot four variables?
+
+In this scenario, we add interactivity to the data visualization. Here, we randomly select one of the rows (one observation), reshape the data, and plot each variable as a point on the line.
 
 (make it interactive)
 
@@ -82,6 +96,8 @@ the_data |>
 
 ## Plot another two variables
 
+Similarly, we can select another pair of variables and visualize their relationship.
+
 ```{r}
 the_data |>
   mutate(id = row_number()) |>
@@ -94,7 +110,9 @@ the_data |>
   scale_y_continuous(limits = c(-3, 3))
 ```
 
-## Plot the complete dataset
+## Plot the complete data set
+
+To get an overview of all variables in a single plot, we can pivot the entire data set and plot each variable on the x-axis against its value on the y-axis.
 
 ```{r}
 the_data |>
@@ -110,7 +128,7 @@ the_data |>
   scale_y_continuous(limits = c(-3.3, 3.3))
 ```
 
-## Plot the complete dataset
+## Plot the complete data set
 
 (make it interactive)
 
@@ -125,4 +143,6 @@ the_data |>
   scale_y_continuous(limits = c(-3, 3))
 ```
 
+## What have we done
 
+Understand the relationships between our variables in the multivariate data set. They can reveal patterns that could be important for further analysis. The individual scatter plots give us a detailed look at the relationship between selected pairs of variables.
