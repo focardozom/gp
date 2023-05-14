@@ -46,7 +46,7 @@ Ensure you have the following software installed on your system:
    ```
 2. Install Python, R and Julia packages
    ```sh
-   (I need to feel)
+   using Pkg, DataFrames, GLM, StatsModels, Distributions, ...
    ```
 
 ## Simulated Data

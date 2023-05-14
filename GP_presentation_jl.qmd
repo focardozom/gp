@@ -59,7 +59,6 @@ using Pkg
 #Pkg.add("GLM")
 #Pkg.add("StatsModels")
 #Pkg.add("Distributions")
-Pkg.add("RCall")
 ```
 
 ```{julia}
