@@ -90,6 +90,6 @@ Please check out our [References](https://github.com/focardozom/gp/blob/main/REF
 3. Modeling-inference-prediction with GP
 4. Practical example
 
-## Articles in Prevention Science using GP
+## Examples of GP in prevention
 
-[here](https://github.com/focardozom/gp/blob/main/GP_examples.qmd)
+[here](https://github.com/focardozom/gp/blob/main/GP_examples.md)
