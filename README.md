@@ -92,4 +92,4 @@ Please check out our [References](https://github.com/focardozom/gp/blob/main/REF
 
 ## Articles in Prevention Science using GP
 
-1. 
+[here](https://github.com/focardozom/gp/blob/main/GP_examples.qmd)
