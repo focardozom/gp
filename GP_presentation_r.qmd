@@ -66,18 +66,27 @@ the_data |>
 To plot three variables, we might consider using 3D scatter plots or other visualization methods.
 
 ```{r}
-the_data |>
-  mutate(id = row_number()) |>
-  select(var1, var2, id) |>
-  ggplot(aes(x = var1, y = var2)) +
-  geom_point() +
-  scale_y_continuous(limits = c(-3, 3))
+# Install and load the necessary package
+# install.packages("plotly")
+library(plotly)
+
+to_plot <- the_data %>%
+  sample_n(20)
+
+# Assuming the_data is a dataframe with three columns: var1, var2, var3
+fig <- plot_ly(to_plot, x = ~var1, y = ~var2, z = ~var3, type = "scatter3d", mode = "markers")
+
+# Print the plot
+fig
 
 ```
 
+
 ## Plot four variables?
 
-In this scenario, we add interactivity to the data visualization. Here, we randomly select one of the rows (one observation), reshape the data, and plot each variable as a point on the line.
+It is not possible, but... 
+
+We can star simple, selecting one of the rows, reshaping the data, and plotting each variable as a point on the line.
 
 (make it interactive)
 
@@ -130,6 +139,7 @@ the_data |>
 
 ## Plot the complete data set
 
+Finally, we can take more than one subsample.
 (make it interactive)
 
 ```{r}
@@ -143,6 +153,4 @@ the_data |>
   scale_y_continuous(limits = c(-3, 3))
 ```
 
-## What have we done
-
-Understand the relationships between our variables in the multivariate data set. They can reveal patterns that could be important for further analysis. The individual scatter plots give us a detailed look at the relationship between selected pairs of variables.
+## Create the RBF graph...
