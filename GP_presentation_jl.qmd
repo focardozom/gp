@@ -14,12 +14,11 @@ jupyter: julia-1.8
 
 ::: {.column width="45%"}
 
-* What is Gaussian Processes (GP)  
-* Simple problem 
-  * Linear regression 
-  * Polynomial regression 
-* Problem with polynomials 
-  * Splines/loess
+* What are Gaussian Processes (GP)?
+
+* Simple problem: Linear regression and Polynomial regression.
+
+* Problem with polynomials and alternatives Splines/loess.
 
 :::
 
@@ -28,13 +27,12 @@ jupyter: julia-1.8
 :::
 
 ::: {.column width="45%"}
-* Kernels
-  * Types of Kernels
-* Gaussian Process
-  * Estimate
-  * Predictions
-  * Inference
-* Example
+
+* Introduction to Kernels and their types.
+
+* Exploring Gaussian Processes: Estimation, Predictions, and Inference.
+
+* Practical Example.
   
 :::
 
@@ -45,13 +43,10 @@ jupyter: julia-1.8
 
 ## GP
 
-* A Gaussian process is a collection of random variables, any finite number of which have a joint Gaussian distribution.
+A Gaussian process is a collection of random variables, any finite number of which have a joint Gaussian distribution. This stochastic process generalizes the notion of a Gaussian distribution to infinite-dimensional random vectors.
 
-* A Gaussian process is a stochastic process with a joint Gaussian distribution. It is a generalization of the notion of a Gaussian distribution to infinite-dimensional random vectors.
+In simpler terms, a Gaussian Process is a tool for making predictions when we have some information, but not complete information. For instance, if you have a number of points on a graph and you want to draw a line that smoothly connects them, Gaussian Processes can assist in achieving this through mathematical computation!
 
-## GP
-
-GPT response: A Gaussian Process is a way to make predictions or guesses when *we have some information*, but not everything. Imagine you have a bunch of dots on a piece of paper, and you want to draw a line that goes smoothly through them. The Gaussian Process helps us do that by using math!
 
 ```{julia}
 using Pkg
@@ -76,8 +71,7 @@ using DataFrames, GLM, Plots
 
 ## Simulated data
 
-* Create some data using the `Sine` function.
-* Add some noise to the data.
+Let's create some data using the Sine function and introduce some noise to this data.
 
 ```{julia}
 #| echo: true
@@ -91,6 +85,8 @@ y_noisy = @. sin(x) + 0.3*randn()
 
 ## Plot generated data
 
+We can visualize our generated data with the following code:
+
 ```{julia}
 
 data = DataFrame(x=x,y=y_noisy)
@@ -101,6 +97,8 @@ plot(data.x, data.y, seriestype=:scatter, label="data")
 # Linear Regression {background-color=#ffe700}
 
 ## Estimate the linear regression
+
+We'll use a basic Ordinary Least Squares (OLS) regression model to estimate the relationship between our variables.
 
 ```{julia}
 #| messages: false
@@ -113,6 +111,8 @@ ols
 
 ## Plot the linear regression
 
+We can also plot our estimated model:
+
 ```{julia}
 
 plot!(data.x, pred.y, seriestype=:line, label="Linear")
@@ -121,9 +121,9 @@ plot!(data.x, pred.y, seriestype=:line, label="Linear")
 
 # Polynomial Regression {background-color=#74ee15} 
 
-## Estimate Polynomial
+## Estimating the Polynomial Regression
 
-Polynomial regression extends simple linear regression by allowing for more flexible relationships between the independent and dependent variables. It does this by adding higher-order terms (squares, cubes, etc.) of the predictor variables in the regression equation.
+Polynomial regression extends simple linear regression by allowing for more flexible relationships between the x and y. It does this by adding higher-order terms (squares, cubes, etc.) of the predictor variables.
 
 ```{julia}
 ols_p = lm(@formula(y ~ x + x^2), data)
@@ -131,13 +131,13 @@ pred.y_p = predict(ols_p, pred)
 ols_p
 ```
 
-## Plot Polynomial 
+## Plotting the Polynomial Regression
 
 ```{julia}
 plot!(data.x, pred.y_p, seriestype=:line, label="Ploy")
 ```
 
-## Estimate Polynomial Part II
+## Estimating the Polynomial Regression Part II
 
 ```{julia}
 ols_p = lm(@formula(y ~ x + x^2 + x^3 + x^4), data)
@@ -145,13 +145,13 @@ pred.y_p = predict(ols_p, pred)
 ols_p
 ```
 
-## Plot Polynomial  Part. II
+## Plotting the Polynomial Regression Part. II
 
 ```{julia}
 plot!(data.x, pred.y_p, seriestype=:line, label="Ploy")
 ```
 
-## Estimate Polynomial Part II
+## Estimating the Polynomial Regression Part III
 
 ```{julia}
 ols_mp = lm(@formula(y ~ x + x^2 + x^3 + x^4 + x^5 + x^6 + x^7), data)
@@ -159,7 +159,7 @@ pred.y_mp = predict(ols_mp, pred)
 ols_mp
 ```
 
-## Plot Polynomial Part II
+## Plotting the Polynomial Regression Part III
 
 ```{julia}
 plot!(data.x, pred.y_mp, seriestype=:line, label="Ploy 7")
@@ -171,22 +171,32 @@ plot!(data.x, pred.y_mp, seriestype=:line, label="Ploy 7")
 
 Very easy, but, what if we have more variables?
 
-* Bad for predictions
-* Not smooth
-* Overfitting
-* Intractable
+There are some limitations to using polynomial regression, especially when dealing with multiple variables:
 
-## The Solution 
+* Potential for overfitting. 
+* Lack of smoothness. 
+* Difficulty with predictions.
+* Intractability when dealing with multiple variables.
+
+## The Solution
+
+::: {.r-fit-text}
+
+To overcome the limitations of polynomial regression, we can use other techniques like Splines and LOESS:
 
 **Splines:** The idea is to fit different low-degree polynomial functions over different parts of the data. This can provide a more flexible fit than a single polynomial over the entire range of the data.
 
 **LOESS (LOcally Estimated Scatterplot Smoothing) or LOWESS (LOcally WEighted Scatterplot Smoothing):** for each point in the dataset, a subset of neighboring points is selected, and a polynomial (usually linear or quadratic) is fit to this subset of data. The point is then estimated using this local fit. The process is repeated for each point in the dataset to generate a smooth curve that captures the local trends in the data.
+
+:::
 
 # Kernels  {background-color=#001eff}  
 
 ## What is a Kernel?
 
 ::: {.r-fit-text}
+
+* Kernels are key to understanding and implementing Gaussian Processes.
 
 * The core idea of Kernel methods is to map the input data into a higher-dimensional space where it is easier to apply linear methods
 
