@@ -89,3 +89,7 @@ Please check out our [References](https://github.com/focardozom/gp/blob/main/REF
 2. [Ploting multivariate data]
 3. Modeling-inference-prediction with GP
 4. Practical example
+
+## Articles in Prevention Science using GP
+
+1. 
